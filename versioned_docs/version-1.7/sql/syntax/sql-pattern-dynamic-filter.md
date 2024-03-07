@@ -9,9 +9,9 @@ title: Dynamic filters
 
 Dynamic filters function as filter operators, but the filter condition contains a dynamic variable. They enable filtering data streams in real-time and allow a condition to be defined that incoming data must meet in order to be processed.
 
-An valid dynamic filter comprises the following components:
+A valid dynamic filter comprises the following components:
 
-- A comparision operator including `<`, `>`, `<=`, `>=` and `BETWEEN`
+- A comparison operator including `<`, `>`, `<=`, `>=` and `BETWEEN`
 - A column as the left side 
 - A scalar subquery as the right side
 
@@ -50,6 +50,6 @@ HAVING
 
 Under the hood, RisingWave maintains this materialized view with a continuous streaming job that filters the aggregation results according to the `HAVING` clause. Note that the subquery result, which is 0.01% of the total cost, is constantly changing, either increasing or decreasing, depending on the incoming changes to the `partsupp` table.
 
-As this value increases, more results will satisfy this condition and be output; conversely, as this value decreases, more rows are filtered out, and fewer results will be output.
+As this value increases, more results will satisfy this condition and be output; conversely, as this value decreases, more rows are filtered out, resulting in fewer outputs.
 
 RisingWave implements this using dynamic filters, internal stateful operators that keep a full set of results before filtering and decides which changes should be output.
